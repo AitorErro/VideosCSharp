@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//COMENTARIO DESDE CASA (EN MASTER)
+//COMMENT EN desarrolloCasa
 
 namespace Institucion
 {
