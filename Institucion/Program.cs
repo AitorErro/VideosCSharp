@@ -1,5 +1,6 @@
 ﻿using Institucion.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,175 @@ namespace Institucion
     {
         static void Main(string[] args)
         {
+            
+
+
+
+
+            Console.ReadLine();
+        }
+
+        private static void MasArrays()
+        {
+            List<Persona> listaPersonas = new List<Persona>();
+
+            listaPersonas.Add(new Alumno("Aitor", "Erro") { NickName = "Karratu", });
+            listaPersonas.Add(new Profesor()
+            {
+                Nombre = "Fernando",
+                Apellido = "Calvo",
+            });
+            listaPersonas.Add(new Profesor()
+            {
+                Nombre = "Gabri",
+                Apellido = "Cysnet",
+            });
+            listaPersonas.Add(new Alumno("Alain", "Esteso"));
+            listaPersonas.Add(new Alumno("Juan", "Perez"));
+
+            for (int i = 0; i < listaPersonas.Count; i++)
+            {
+                if (listaPersonas[i] is Alumno)
+                {
+                    var al = (Alumno)listaPersonas[i];
+                    Console.WriteLine(al.NickName != null ? al.NickName : al.NombreCompleto);
+                }
+                else
+                {
+                    var per = listaPersonas[i] as Persona;
+                    //Console.WriteLine(per?.NombreCompleto);
+                    if (per != null)
+                    {
+                        Console.WriteLine(per.NombreCompleto);
+                    }
+                }
+
+                foreach (var obj in listaPersonas)
+                {
+                    if (obj is Alumno)
+                    {
+                        var al = (Alumno)listaPersonas[i];
+                        Console.WriteLine(al.NickName != null ? al.NickName : al.NombreCompleto);
+                    }
+                    else
+                    {
+                        var per = obj as Persona;
+                        //Console.WriteLine(per?.NombreCompleto);
+                        if (per != null)
+                        {
+                            Console.WriteLine(per.NombreCompleto);
+                        }
+                    }
+                }
+
+            }
+
+
+            Persona[] arrayPersonas = new Persona[5];
+
+            var tam = arrayPersonas.Length;
+
+            arrayPersonas[0] = new Alumno("Aitor", "Erro")
+            {
+                NickName = "Karratu",
+            };
+            arrayPersonas[1] = new Profesor()
+            {
+                Nombre = "Fernando",
+                Apellido = "Calvo",
+            };
+            arrayPersonas[2] = new Profesor()
+            {
+                Nombre = "Gabri",
+                Apellido = "Cysnet",
+            };
+            arrayPersonas[3] = new Alumno("Alain", "Esteso");
+            arrayPersonas[4] = new Alumno("Juan", "Perez");
+
+            Console.ReadLine();
+        }
+
+        private static void Arrays()
+        {
+            Persona[] arrayPersonas = new Persona[5];
+
+            var tam = arrayPersonas.Length;
+
+            arrayPersonas[0] = new Alumno("Aitor", "Erro")
+            {
+                NickName = "Karratu",
+            };
+            arrayPersonas[1] = new Profesor()
+            {
+                Nombre = "Fernando",
+                Apellido = "Calvo",
+            };
+            arrayPersonas[2] = new Profesor()
+            {
+                Nombre = "Gabri",
+                Apellido = "Cysnet",
+            };
+            arrayPersonas[3] = new Alumno("Alain", "Esteso");
+            arrayPersonas[4] = new Alumno("Juan", "Perez");
+
+            for (int i = 0; i < arrayPersonas.Length; i++)
+            {
+                if (arrayPersonas[i] is Alumno)
+                {
+                    var al = (Alumno)arrayPersonas[i];
+                    Console.WriteLine(al.NickName != null ? al.NickName : al.NombreCompleto);
+                }
+                else
+                {
+                    Console.WriteLine(arrayPersonas[i].NombreCompleto);
+                }
+
+            }
+        }
+
+        private static void Casteos()
+        {
+            var alumno = new Alumno("Aitor", "Erro");
+            var profesor = new Profesor();
+            Persona persona = profesor;
+
+            //-------------
+            alumno = (Alumno)persona;
+
+            //-------------
+            if (persona is Profesor)
+            {
+                var profe = (Profesor)persona;
+                ///...
+            }
+
+            //-------------
+            var tmpProfe = persona as Profesor;
+            if (tmpProfe != null)
+            {
+                ///...
+            }
+        }
+
+        private static void Rutina2()
+        {
+            // Short from -32.000 to +32.000
+            short s = 32000;
+            int i = 33000;
+            float f = 2.35f;
+            double d = (double)0.60050561546065156065156005761076015670156707641076501576015761457601560741560765415761576015670165741789m;
+
+
+            Console.WriteLine(i);
+            s = (short)i;
+            Console.WriteLine(s);
+            Console.WriteLine(f);
+            i = (int)f;
+            Console.WriteLine(i);
+        }
+
+        public void Rutina1 ()
+        {
             Console.WriteLine("GESTOR DE INSTITUCION");
 
             Persona[] lista = new Persona[3];
@@ -24,7 +194,7 @@ namespace Institucion
                 Email = "eduardo@cysnet.com"
             };
 
-            lista [1] = new Profesor()
+            lista[1] = new Profesor()
             {
                 Id = 2,
                 Nombre = "Pello",
@@ -69,8 +239,12 @@ namespace Institucion
             var cursoFreak = c;
             cursoFreak.Curso = "666-G";
 
-            Console.WriteLine("Curso 'c' = "+c.Curso);
+            Console.WriteLine("Curso 'c' = " + c.Curso);
             Console.WriteLine("Curso 'cursoFreak' = " + cursoFreak.Curso);
+
+            Console.WriteLine("");
+            Console.WriteLine("Pulsar cualquier tecla para continar...");
+            Console.ReadKey();
 
             //CLASSES
             Console.WriteLine("C L A S S E S");
@@ -109,8 +283,6 @@ namespace Institucion
             Console.WriteLine($"Tipo iei: {iei.GetType()} ");
             Console.WriteLine($"Tipo {nameof(Alumno)} ");
             Console.WriteLine($"Tipo {sizeof(int)} ");
-
-            Console.ReadLine();
         }
     }
 }

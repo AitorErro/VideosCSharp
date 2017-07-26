@@ -24,6 +24,5 @@ namespace Institucion.Models
             max_capacidad = max_cap;
             curso = NOM_DEF_CURSO;
         }
-
     }
 }
