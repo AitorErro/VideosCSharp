@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Institucion.Models
 {
-    interface IEnteInstituto
+    public interface IEnteInstituto
     {
         string CodigoInterno { get; set; }
 

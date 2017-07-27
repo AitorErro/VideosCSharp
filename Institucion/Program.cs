@@ -1,7 +1,10 @@
-﻿using Institucion.Models;
+﻿using Institucion.DataAccess;
+using Institucion.Misc;
+using Institucion.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,12 +17,133 @@ namespace Institucion
     {
         static void Main(string[] args)
         {
-            
+            var listaProfesores = CrearLista();
+            var db = new InstitucionDB();
 
+            //db.Profesores.AddRange(listaProfesores);
+            //db.SaveChanges();
+
+            //var subconjunto = from prof in db.Profesores
+            //                  where prof.Nombre.StartsWith("J")
+            //                  select prof;
+
+            //foreach (var item in subconjunto)
+            //{
+            //    item.CodigoInterno = "STARTS_WITH_J";
+            //    Console.WriteLine(item.Nombre);
+            //}
+
+            //db.SaveChanges();
+
+            var profesorBorrable = (from p in db.Profesores
+                                   where p.Nombre == "Jeronimo"
+                                   select p;
 
 
 
             Console.ReadLine();
+        }
+
+        private static List<Profesor> CrearLista()
+        {
+            Random rnd = new Random();
+            var lista = new List<Profesor>();
+
+            lista.Add(new Profesor() { Nombre = "Juan Carlos", Id = rnd.Next() });
+            lista.Add(new Profesor()
+            {
+                Nombre = "Jeronimo",
+                Catedra = "Marketing",
+                Id = rnd.Next()
+            });
+            lista.Add(new Profesor() { Nombre = "Yohanna", Id = rnd.Next() });
+            lista.Add(new Profesor() { Nombre = "Martha", Catedra = "Marketing", Id = rnd.Next() });
+            lista.Add(new Profesor() { Nombre = "Jose Mauricio", Id = rnd.Next() });
+            lista.Add(new Profesor() { Nombre = "Angela", Id = rnd.Next() });
+            lista.Add(new Profesor() { Nombre = "Walter", Id = rnd.Next() });
+            lista.Add(new Profesor() { Nombre = "Marco", Id = rnd.Next() });
+            lista.Add(new Profesor() { Nombre = "Satya", Id = rnd.Next() });
+            lista.Add(new Profesor() { Nombre = "Terry", Catedra = "Marketing", Id = rnd.Next() });
+            lista.Add(new Profesor() { Nombre = "Alexander", Id = rnd.Next() });
+            lista.Add(new Profesor() { Nombre = "Sandra", Id = rnd.Next() });
+
+            return lista;
+        }
+
+        private static void ArchivosYDeMas()
+        {
+            var listProfes = new List<Profesor>();
+
+            string[] lineas = File.ReadAllLines("./Files/Profesores.txt");
+
+            var localId = 0;
+
+            foreach (var linea in lineas)
+            {
+                listProfes.Add(new Profesor()
+                {
+                    Nombre = linea,
+                    Id = localId++,
+                });
+            }
+
+            foreach (var profe in listProfes)
+            {
+                Console.WriteLine(profe.Nombre);
+            }
+
+            var archivo = File.Open("profesBinarios.bin", FileMode.OpenOrCreate);
+
+            var binFile = new BinaryWriter(archivo);
+
+            foreach (var profe in listProfes)
+            {
+                var bytesNombre = Encoding.UTF8.GetBytes(profe.Nombre);
+
+
+                binFile.Write(profe.Nombre);
+                binFile.Write(profe.Id);
+
+            }
+
+            binFile.Close();
+            archivo.Close();
+        }
+
+        private static void EventosYDeMas()
+        {
+            var profesor = new Profesor() { Id = 23, Nombre = "Mateo", Apellido = "Perez", CodigoInterno = "PROFE_SMART" };
+
+            var transmitter = new TrasnsmisionDeDatos();
+            transmitter.InformacionEnviada += Transmitter_InformacionEnviada;
+            transmitter.InformacionEnviada += (obj, evtarg) =>
+            {
+                Console.WriteLine("WOAAAAAAAAAAAAAAAAAAAA");
+            };
+
+            transmitter.FormatearYEnviar(profesor, Formatter, "ALEXTROIO");
+
+            transmitter.InformacionEnviada -= Transmitter_InformacionEnviada;
+            transmitter.FormatearYEnviar(profesor, (s) => new string(s.Reverse().ToArray<char>()), "ALEXTROIO");
+        }
+
+        private static void Transmitter_InformacionEnviada(object sender, EventArgs e)
+        {
+            Console.WriteLine("TRANSMISIÓN DE INFORMACIÓN");
+        }
+
+        private static string Formatter(string input)
+        {
+            var bytes = Encoding.UTF8.GetBytes(input);
+
+            var base64 = Convert.ToBase64String(bytes);
+
+            return base64;
+        }
+
+        private static string ReverseFormatter(string input)
+        {
+            return new string(input.Reverse().ToArray<char>());
         }
 
         private static void MasArrays()

@@ -1,4 +1,4 @@
-﻿enum EstadosAlumno
+﻿public enum EstadosAlumno
 {
     Matriculado,
     Activo=100,
