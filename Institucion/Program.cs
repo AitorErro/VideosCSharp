@@ -37,7 +37,7 @@ namespace Institucion
 
             var profesorBorrable = (from p in db.Profesores
                                    where p.Nombre == "Jeronimo"
-                                   select p;
+                                   select p);
 
 
 
